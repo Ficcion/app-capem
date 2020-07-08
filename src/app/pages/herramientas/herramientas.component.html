@@ -1,0 +1,30 @@
+<div *ngIf="admin" class="card-container">
+    <a (click)="crear = !crear" class="card">
+        <span class="h">Crear</span>
+    </a>
+
+    <input #buscado (change)="llenarUsuario( buscado.value )" class="card" type="text" required placeholder="editar usuario">
+
+    <a class="card">
+        <span class="h">Limpiar</span>
+    </a>
+</div>
+
+<div *ngIf="crear" class="card-container">
+    <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarUsuario()">
+        <input formControlName="nombre" class="card" type="text" required placeholder="nombre de empresa">
+        
+        <input formControlName="empresa" class="card" type="text" required placeholder="codigo de empresa">
+
+        <input formControlName="role" class="card" type="text" placeholder="role">
+
+        <input formControlName="activo" class="card" type="text" placeholder="activo">
+
+        <input formControlName="password" class="card" type="password" required minlength="6" placeholder="contraseña">
+        
+        <div class="col">
+            <button *ngIf="registrar" class="btn btn-block btn-primary" type="submit">Registrar</button>
+            <button *ngIf="actualizar" class="btn btn-block btn-success" type="button" (click)="cambiosUsuario()">Actualizar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="content" role="main">
+  <h2>Credenciales</h2>
+  <p>Identifícate para hacer uso de las estadísticas.</p><br>
+
+    <div>
+      <form class="card-container" ngNativeValidate #l="ngForm" (ngSubmit)="ingresar( l )">
+        <input [ngModel]="empresa" class="card" type="text" name="empresa" required placeholder="Clave de tu empresa">
+            
+        <input ngModel class="card" type="password" name="password" required placeholder="password">
+    
+        <div class="form-contol">
+          <input [(ngModel)]="recordarUsuario" style="margin-top: 10px; margin-left: 10px" id="ckb1" type="checkbox" name="recordarUsuario">
+          <label for="ckb1" style="margin-left: 7px; margin-bottom: 30px;">Recordar mi usuario</label>
+        </div>
+        
+        <button class="btn btn-primary form-control" type="submit">Ingresar</button>
+      </form>
+    </div>
+</div>
+  

@@ -1,0 +1,131 @@
+<div class="content doNotPrint" role="main">
+  <h1 class="alert alert-primary">Hola, {{usuarioService.usuario.nombre}}.</h1>
+  <app-herramientas></app-herramientas>
+    <div class="card-container">
+      <a class="card" (click)="descargar()">
+        <span class="h">Descargar</span>
+        <svg class="material-icons" style="transform: rotate(90deg);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </a>
+
+      <a class="card" (click)="onPrint()">
+        <span class="h">Imprimir</span>
+      </a>
+    
+      <a (click)="usuarioService.logOut()" class="card">
+        <span class="h">Salir</span>
+        <svg class="material-icons" style="transform: rotate(270deg);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </a>
+    </div>
+</div>
+
+<section id="graficaPastel">
+  <div class="content">
+    <h1 style="color: #575959;" >Datos del {{miFecha | date}}</h1>
+  </div>
+  
+  <div class="chart container impr">
+    <canvas baseChart
+      [data]="pieChartData"
+      [labels]="pieChartLabels"
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [legend]="pieChartLegend">
+    </canvas>
+  </div>
+
+  <div class="container mt-5 mb-5">
+    <img src="https://res.cloudinary.com/kinich/image/upload/v1593738650/LogoCAPEM_f4zex2.png" alt="logotipo-CAPEM" style="width: 180px;">
+      
+    <table class="table table-responsive-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Encuestas</th>
+          <th scope="col">Riesgos T2</th>
+          <th scope="col">Riesgos T3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{encuestasHoy.length}}</td>
+          <td>{{riesgo2Hoy.length}}</td>
+          <td>{{riesgo3Hoy.length}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+</section>
+
+<section id="graficaLinea" class="saltopagina">
+  <div class="content">
+    <h1 style="color: #575959;" >Datos semestrales</h1>
+  </div>
+  
+  <div class="chart container impr2">
+    <canvas baseChart 
+      [datasets]="lineChartData" 
+      [labels]="lineChartLabels" 
+      [chartType]="lineChartType" 
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend" >
+    </canvas>
+  </div>
+  
+  <div class="container">
+    <div class="mt-5 mb-5">
+        <img src="https://res.cloudinary.com/kinich/image/upload/v1593738650/LogoCAPEM_f4zex2.png" alt="logotipo-CAPEM" style="width: 180px;">
+    
+      <table class="table table-responsive-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Jul</th>
+            <th scope="col">Ago</th>
+            <th scope="col">Sep</th>
+            <th scope="col">Oct</th>
+            <th scope="col">Nov</th>
+            <th scope="col">Dic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr>
+            <td>Encuestas</td>
+            <td>{{encuestasJul.length}}</td>
+            <td>{{encuestasAgo.length}}</td>
+            <td>{{encuestasSep.length}}</td>
+            <td>{{encuestasOct.length}}</td>
+            <td>{{encuestasNov.length}}</td>
+            <td>{{encuestasDic.length}}</td>
+          </tr> -->
+          <tr>
+            <td>Riesgos</td>
+            <td>{{riesgosJul}}</td>
+            <td>{{riesgosAgo}}</td>
+            <td>{{riesgosSep}}</td>
+            <td>{{riesgosOct}}</td>
+            <td>{{riesgosNov}}</td>
+            <td>{{riesgosDic}}</td>
+          </tr>
+          <tr>
+            <td>Riesgos T2</td>
+            <td>{{riesgoT2jul.length}}</td>
+            <td>{{riesgoT2ago.length}}</td>
+            <td>{{riesgoT2sep.length}}</td>
+            <td>{{riesgoT2oct.length}}</td>
+            <td>{{riesgoT2nov.length}}</td>
+            <td>{{riesgoT2dic.length}}</td>
+          </tr>
+          <tr>
+            <td>Riesgos T3</td>
+            <td>{{riesgoT3jul.length}}</td>
+            <td>{{riesgoT3ago.length}}</td>
+            <td>{{riesgoT3sep.length}}</td>
+            <td>{{riesgoT3oct.length}}</td>
+            <td>{{riesgoT3nov.length}}</td>
+            <td>{{riesgoT3dic.length}}</td>
+          </tr>
+        </tbody>
+      </table><br>
+    </div>
+  </div>
+</section>

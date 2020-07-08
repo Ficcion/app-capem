@@ -1,0 +1,196 @@
+<div class="container" style="margin-bottom: 80px;">
+    <div class="card-container">
+        <a routerLink="/recursos" class="card">
+            <svg class="material-icons" style="transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          <span>Recursos</span>
+        </a>
+    </div>  
+    <div class="row">
+        <h4 class="col">CUESTIONARIO COVID-19</h4>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <form [formGroup]="forma" (ngSubmit)="enviarEncuesta()">
+                <section id="seccion1">
+                    <div class="form-group row">
+                        <div class="col-md-4 encuesta">
+                            <input (change)="validaEmpresa()" type="text" class="form-control" formControlName="codigo" placeholder="Código de empresa">
+                            <p *ngIf="empresaErr" class="text-danger">Ingresa una empresa correcta</p>
+                        </div>
+                        <div class="input-group col-md-4 encuesta">
+                            <input (change)="copiaEmpleado()" type="text" class="form-control" formControlName="numEmp" placeholder="# Empleado (requerido)">
+                        </div>
+                        <div class="input-group col-md-4">
+                            <input type="text" class="form-control" formControlName="fecha" readonly placeholder="Fecha">
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>¿Has tenido alguno de los siguientes síntomas en los últimos 7 días?</h4>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="fiebre" id="Switch1">
+                                <label class="custom-control-label" for="Switch1">FIEBRE</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="tos" id="Switch2">
+                                <label class="custom-control-label" for="Switch2">TOS</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="diarrea" id="Switch3">
+                                <label class="custom-control-label" for="Switch3">DIARREA</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="vomito" id="Switch4">
+                                <label class="custom-control-label" for="Switch4">VÓMITO</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="calosfrios" id="Switch5">
+                                <label class="custom-control-label" for="Switch5">CALOSFRÍOS</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="dlrCabeza" id="Switch6">
+                                <label class="custom-control-label" for="Switch6">DOLOR DE CABEZA</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="dlrAbdominal" id="Switch7">
+                                <label class="custom-control-label" for="Switch7">DOLOR ABDOMINAL</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="dlrMuscular" id="Switch8">
+                                <label class="custom-control-label" for="Switch8">DOLOR MUSCULAR</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="dlrArticulaciones" id="Switch9">
+                                <label class="custom-control-label" for="Switch9">DOLOR EN LAS ARTICULACIONES</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="debilidadMal" id="Switch10">
+                                <label class="custom-control-label" for="Switch10">DEBILIDAD Y MALESTAR EN GENERAL</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="secrNasal" id="Switch11">
+                                <label class="custom-control-label" for="Switch11">SECRECIÓN NASAL</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="dlrGarganta" id="Switch12">
+                                <label class="custom-control-label" for="Switch12">DOLOR DE GARGANTA AL PASAR ALIMENTOS</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" formControlName="conjuntivitis" id="Switch13">
+                                <label class="custom-control-label" for="Switch13">CONJUNTIVITIS</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button *ngIf="this.forma.valid" class="btn-outline-primary btn-lg" type="button" (click)="comprueba1()">Siguiente</button>
+                    </div>
+                </section>
+                
+                <section id="seccion2">
+                    <h4>¿Tienes alguno de estos síntomas?
+                        <p *ngIf="this.forma.value.sintomas2 === null" class="text-danger">(Debes elegir una opción para continuar)</p>
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li>DIFICULTAD PARA RESPIRAR</li>
+                                <li>COLORACIÓN MORADA DE LA PIEL</li>
+                                <li>DOLOR INTENSO EN EL PECHO</li>
+                                <li>ABUNDANTE SECRECIÓN MUCOSA POR LA NARÍZ Y FLEMA</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li>CONFUSIÓN MENTAL Y DESMAYO</li>
+                                <li>VÓMITO O DIARREA PERSISTENTE</li>
+                                <li>FIEBRE ALTA DE DIFÍCIL CONTROL</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="form-check form-check-inline radio">
+                            <input (click)="llenarCorreo()" class="form-check-input" type="radio" formControlName="sintomas2" id="radio1" value="Sí">
+                            <label class="form-check-label" for="Radio1">SI</label>
+                        </div>
+                        <div class="form-check form-check-inline radio">
+                            <input class="form-check-input" type="radio" formControlName="sintomas2" id="radio2" value="No">
+                            <label class="form-check-label" for="Radio2">NO</label>
+                        </div>
+                    </div> 
+                    <div class="form-group text-right">
+                        <button *ngIf="this.forma.value.sintomas2 !== null" class="btn-outline-primary btn-lg" type="button" (click)="comprueba2()">Siguiente</button>
+                    </div>                    
+                </section>
+
+                <section id="seccion3">
+                    <h4>¿Padeces alguna de estas enfermedades?
+                        <p *ngIf="!btn3" class="text-danger">(Debes elegir una opción para continuar)</p>
+                    </h4>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="diabetes" id="Switch14">
+                                <label class="custom-control-label" for="Switch14">DIABETES</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="presion" id="Switch15">
+                                <label class="custom-control-label" for="Switch15">PRESIÓN ALTA</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfCorazon" id="Switch16">
+                                <label class="custom-control-label" for="Switch16">ENFERMEDADES DEL CORAZÓN</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfRenal" id="Switch17">
+                                <label class="custom-control-label" for="Switch17">ENFERMEDAD RENAL</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfPulmonares" id="Switch18">
+                                <label class="custom-control-label" for="Switch18">ENFERMEDADES PULMONARES CRÓNICAS</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="cancer" id="Switch19">
+                                <label class="custom-control-label" for="Switch19">CÁNCER</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="inmunocompromiso" id="Switch20">
+                                <label class="custom-control-label" for="Switch20">INMUNOCOMPROMISO</label>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="vih" id="Switch21">
+                                <label class="custom-control-label" for="Switch21">VIH</label>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group custom-control custom-switch">
+                                <input (change)="valNinguna($event)" type="checkbox" class="custom-control-input" formControlName="ninguna" id="Switch22">
+                                <label class="custom-control-label" for="Switch22">NINGUNA</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="btn3" class="form-group text-right">
+                        <button class="btn-outline-primary btn-lg" type="button" (click)="comprueba3()">Siguiente</button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+    <form hidden="hidden" [formGroup]="correo" (ngSubmit)="enviarCorreo()">
+        <input type="text" class="form-control" formControlName="nombre">
+        <input type="text" class="form-control" formControlName="asunto">
+        <input type="text" class="form-control" formControlName="email">
+        <textarea class="form-control" formControlName="mensaje"></textarea>
+    </form>
+</div>
