@@ -4,6 +4,9 @@ import { CorreoModel } from '../models/correo.model';
 import { EncuestaModel } from '../models/encuesta.model';
 import { UsuarioService } from './usuario.service';
 import { URL_SERVICIOS } from '../config/config';
+import { map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +38,25 @@ export class EncuestaService {
 
 
   crearEncuesta( encuesta: EncuestaModel ) {
-    const url = URL_SERVICIOS + '/encuesta?token=' + this.usuarioService.token;
+    const url = URL_SERVICIOS + '/encuesta';
 
     return this.http.post( url, encuesta );
+  }
+
+
+  borrarEncuestas() {
+    const url = URL_SERVICIOS + '/encuesta?token=' + this.usuarioService.token;
+
+    return this.http.delete( url )
+      .pipe(map( resp => {
+        Swal.fire({
+          title: '¡Hecho!',
+          text: 'Se han eliminado las encuestas que no registraron riesgo.',
+          icon: 'success',
+        });
+
+        return true;
+      }));
   }
 
 

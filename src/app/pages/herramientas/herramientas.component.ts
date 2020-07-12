@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioModel } from '../../models/usuario.model';
+import { EncuestaModel } from '../../models/encuesta.model';
 import { UsuarioService } from '../../services/usuario.service';
+import { EncuestaService } from '../../services/encuesta.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -12,6 +15,7 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class HerramientasComponent implements OnInit {
 
+  encuestas: EncuestaModel [] = [];
   forma: FormGroup;
   usuario: UsuarioModel;
   id = '';
@@ -23,6 +27,7 @@ export class HerramientasComponent implements OnInit {
 
   constructor(
     public usuarioService: UsuarioService,
+    public encuestaService: EncuestaService,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +42,15 @@ export class HerramientasComponent implements OnInit {
     if (this.usuarioService.usuario.role === 'ADMIN_ROLE') {
       this.admin = true;
     }
+    this.noRiesgo();
+  }
+
+
+  noRiesgo() {
+    this.encuestaService.cargarEncuestas()
+    .subscribe( (resp: any) => {
+      this.encuestas = resp.encuestas;
+    });
   }
 
 
@@ -53,8 +67,6 @@ export class HerramientasComponent implements OnInit {
         this.forma.reset();
         this.crear = false;
       });
-    // console.log( this.forma.value );
-
     }
   }
 
@@ -69,11 +81,9 @@ export class HerramientasComponent implements OnInit {
 
     this.usuarioService.cargarUsuario( inputValor )
     .subscribe ( (resp: any) => {
-      // console.log( resp );
       this.id = resp._id;
       this.usuario = resp;
       this.forma.patchValue(this.usuario);
-      console.log( this.id );
 
       // this.cargando = false;
     });
@@ -82,13 +92,34 @@ export class HerramientasComponent implements OnInit {
 
   cambiosUsuario() {
     const usuario = this.forma.value;
-    console.log( usuario );
     this.usuarioService.actualizarUsuario( this.id, usuario )
       .subscribe( usuarioActualizado => {
-        console.log( usuarioActualizado );
         this.forma.reset();
         this.crear = false;
       });
+  }
+
+
+  limpiar(){
+    Swal.fire({
+      title: '¿Seguro?',
+      text: 'Borrará y no hay marcha atrás.',
+      icon: 'warning',
+      showConfirmButton: true,
+      showCancelButton: true
+    }).then( eliminar => {
+
+      if (eliminar) {
+        this.encuestaService.borrarEncuestas()
+          .subscribe( borrada => {
+            console.log( borrada );
+          });
+
+        } else {
+
+        return;
+      }
+    });
   }
 
 

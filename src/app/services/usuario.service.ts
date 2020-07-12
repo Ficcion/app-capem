@@ -24,43 +24,20 @@ export class UsuarioService {
   }
 
 
-  cargarUsuario( empresa: string ) {
-    const url = URL_SERVICIOS + '/usuario/' + empresa;
-
-    return this.http.get( url )
-      .pipe(map( (resp: any) => resp.usuario ));
+  autenticado() {
+    return ( this.token.length > 6 ) ? true : false;
   }
 
 
-  crearUsuario( usuario: UsuarioModel ) {
-    const url = URL_SERVICIOS + '/usuario';
+  cargarStorage() {
+    if ( localStorage.getItem('token')) {
+      this.token = localStorage.getItem('token');
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
 
-    return this.http.post( url, usuario )
-      .pipe(map( (resp: any) => {
-        Swal.fire({
-          title: '¡Hecho!',
-          text: 'Usuario creado.',
-          icon: 'success',
-        });
-
-        return resp.usuario;
-      }));
-  }
-
-
-  actualizarUsuario( id: string, usuario: any ) {
-    const url = URL_SERVICIOS + '/usuario/' + id;
-
-    return this.http.put( url, usuario )
-      .pipe(map( (resp: any) => {
-        Swal.fire({
-          title: '¡Hecho!',
-          text: 'El usuario ha sido actualizado.',
-          icon: 'success',
-        });
-
-        return resp.usuario;
-      }));
+    } else {
+        this.token = '';
+        this.usuario = null;
+    }
   }
 
 
@@ -105,20 +82,45 @@ export class UsuarioService {
   }
 
 
-  autenticado() {
-    return ( this.token.length > 6 ) ? true : false;
+  crearUsuario( usuario: UsuarioModel ) {
+    const url = URL_SERVICIOS + '/usuario?token=' + this.token;
+
+    return this.http.post( url, usuario )
+      .pipe(map( (resp: any) => {
+        Swal.fire({
+          title: '¡Hecho!',
+          text: 'Usuario creado.',
+          icon: 'success',
+        });
+
+        return resp.usuario;
+      }));
   }
 
 
-  cargarStorage() {
-    if ( localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token');
-      this.usuario = JSON.parse(localStorage.getItem('usuario'));
+  actualizarUsuario( id: string, usuario: any ) {
+    let url = URL_SERVICIOS + '/usuario/' + id;
+    url += '?token=' + this.token;
 
-    } else {
-        this.token = '';
-        this.usuario = null;
-    }
+    return this.http.put( url, usuario )
+      .pipe(map( (resp: any) => {
+        Swal.fire({
+          title: '¡Hecho!',
+          text: 'El usuario ha sido actualizado.',
+          icon: 'success',
+        });
+
+        return resp.usuario;
+      }));
+  }
+
+
+  cargarUsuario( empresa: string ) {
+    let url = URL_SERVICIOS + '/usuario/' + empresa;
+    url += '?token=' + this.token;
+
+    return this.http.get( url )
+      .pipe(map( (resp: any) => resp.usuario ));
   }
 
 

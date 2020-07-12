@@ -176,28 +176,27 @@ export class EstadisticasComponent implements OnInit {
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
 
-      if ( encuesta.secc2Riesgo === 'true' && mes === '7') {
-        this.riesgoT2jul.push(encuesta);
-      }
-
-      if ( encuesta.secc2Riesgo === 'true' && mes === '8') {
-        this.riesgoT2ago.push(encuesta);
-      }
-
-      if ( encuesta.secc2Riesgo === 'true' && mes === '9') {
-        this.riesgoT2sep.push(encuesta);
-      }
-
-      if ( encuesta.secc2Riesgo === 'true' && mes === '10') {
-        this.riesgoT2oct.push(encuesta);
-      }
-
-      if ( encuesta.secc2Riesgo === 'true' && mes === '11') {
-        this.riesgoT2nov.push(encuesta);
-      }
-
-      if ( encuesta.secc2Riesgo === 'true' && mes === '12') {
-        this.riesgoT2dic.push(encuesta);
+      if ( encuesta.secc2Riesgo === 'true' ) {
+        switch (mes){
+          case '7':
+            this.riesgoT2jul.push(encuesta);
+            break;
+          case '8':
+            this.riesgoT2ago.push(encuesta);
+            break;
+          case '9':
+            this.riesgoT2sep.push(encuesta);
+            break;
+          case '10':
+            this.riesgoT2oct.push(encuesta);
+            break;
+          case '11':
+            this.riesgoT2nov.push(encuesta);
+            break;
+          case '12':
+            this.riesgoT2dic.push(encuesta);
+            break;
+        }
       }
     }
   }
@@ -208,28 +207,27 @@ export class EstadisticasComponent implements OnInit {
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
 
-      if ( encuesta.secc3Riesgo === 'true' && mes === '7') {
-        this.riesgoT3jul.push(encuesta);
-      }
-
-      if ( encuesta.secc3Riesgo === 'true' && mes === '8') {
-        this.riesgoT3ago.push(encuesta);
-      }
-
-      if ( encuesta.secc3Riesgo === 'true' && mes === '9') {
-        this.riesgoT3sep.push(encuesta);
-      }
-
-      if ( encuesta.secc3Riesgo === 'true' && mes === '10') {
-        this.riesgoT3oct.push(encuesta);
-      }
-
-      if ( encuesta.secc3Riesgo === 'true' && mes === '11') {
-        this.riesgoT3nov.push(encuesta);
-      }
-
-      if ( encuesta.secc3Riesgo === 'true' && mes === '12') {
-        this.riesgoT3dic.push(encuesta);
+      if ( encuesta.secc3Riesgo === 'true' ) {
+        switch (mes){
+          case '7':
+            this.riesgoT3jul.push(encuesta);
+            break;
+          case '8':
+            this.riesgoT3ago.push(encuesta);
+            break;
+          case '9':
+            this.riesgoT3sep.push(encuesta);
+            break;
+          case '10':
+            this.riesgoT3oct.push(encuesta);
+            break;
+          case '11':
+            this.riesgoT3nov.push(encuesta);
+            break;
+          case '12':
+            this.riesgoT3dic.push(encuesta);
+            break;
+        }
       }
     }
   }

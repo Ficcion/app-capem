@@ -87,14 +87,12 @@ export class EncuestaComponent implements OnInit {
     if ( !confirmada) {
 
       this.empresaErr = true;
-      console.log( 'Ingresa una empresa correcta' );
       this.forma.controls.codigo.setValue(null);
 
     } else {
 
       this.empresaErr = false;
       this.mail = confirmada.mail;
-      console.log( this.mail );
     }
    }
 
@@ -103,19 +101,22 @@ export class EncuestaComponent implements OnInit {
     this.empleado = this.forma.value.numEmp;
   }
 
+
   comprueba1() {
-    if (this.forma.value.fiebre === true && this.forma.value.tos === true
-      || this.forma.value.fiebre === true && this.forma.value.dlrCabeza === true
-      || this.forma.value.fiebre === true && this.forma.value.debilidadMal === true) {
+    if (this.forma.value.fiebre === true) {
+      if ( this.forma.value.tos === true
+        || this.forma.value.dlrCabeza === true
+        || this.forma.value.debilidadMal === true) {
 
-      document.getElementById('seccion1').style.display = 'none';
-      document.getElementById('seccion2').style.display = 'block';
-
+          document.getElementById('seccion1').style.display = 'none';
+          document.getElementById('seccion2').style.display = 'block';
+      }
     } else {
 
       Swal.fire({
         title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
-        html: '<span style="color:#575959">No tienes síntomas compatibles con COVID-19, si persisten, acude a evaluación médica para un diagnóstico alterno.<span>',
+        html:
+        '<span style="color:#575959">No tienes síntomas compatibles con COVID-19, si persisten, acude a evaluación médica para un diagnóstico alterno.<span>',
         icon: 'success',
       });
 
@@ -223,10 +224,10 @@ export class EncuestaComponent implements OnInit {
 
       Swal.fire({
         title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
-        html: '<span style="color:#DE6426">Llama de inmediato al servicio médico de la empresa y a R.H.<span>',
+        html:
+        '<span style="color:#DE6426">Llama de inmediato al servicio médico de la empresa y a R.H.<span>',
         icon: 'warning',
       });
-
 
       this.enviarEncuesta();
     }
@@ -276,7 +277,8 @@ export class EncuestaComponent implements OnInit {
 
         Swal.fire({
           title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
-          html: '<span style="color:#575959">Mantente en casa y avisa al servicio médico de la empresa, al jefe directo y a R.H.<span>',
+          html:
+          '<span style="color:#575959">Mantente en casa y avisa al servicio médico de la empresa, al jefe directo y a R.H.<span>',
           icon: 'success',
         });
 
@@ -289,7 +291,8 @@ export class EncuestaComponent implements OnInit {
 
         Swal.fire({
           title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
-          html: '<span style="color:#DE6426">Llama de inmediato al servicio médico de la empresa y a R.H.<span>',
+          html:
+          '<span style="color:#DE6426">Llama de inmediato al servicio médico de la empresa y a R.H.<span>',
           icon: 'warning',
         });
 
@@ -298,7 +301,6 @@ export class EncuestaComponent implements OnInit {
     } else {
 
       this.btn3 = false;
-      console.log( 'Debes elegir al menos una opción' );
     }
   }
 
