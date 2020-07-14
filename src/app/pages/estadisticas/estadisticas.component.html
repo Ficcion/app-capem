@@ -1,3 +1,17 @@
+<div class="row" *ngIf="cargando">
+  <div class="col-sm-12">
+      <div class="alert alert-warning text-center">
+          <strong>Cargando</strong>
+          <br>
+          <i class="fa fa-refresh fa-spin fa2x"></i>
+          <br>
+          <span>Espere por favor</span>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="!cargando">
+
 <div class="content doNotPrint" role="main">
   <h1 class="alert alert-primary">Hola, {{usuarioService.usuario.nombre}}.</h1>
   <app-herramientas></app-herramientas>
@@ -20,7 +34,7 @@
 
 <section id="graficaPastel">
   <div class="content">
-    <h1 style="color: #575959;" >Datos del {{miFecha | date}}</h1>
+    <h1 style="color: #575959;" >Porcentajes<h3>del {{miFecha | date: 'dd MMMM yyyy'}}</h3></h1>
   </div>
   
   <div class="chart container impr">
@@ -28,8 +42,8 @@
       [data]="pieChartData"
       [labels]="pieChartLabels"
       [chartType]="pieChartType"
-      [options]="pieChartOptions"
-      [legend]="pieChartLegend">
+      [legend]="pieChartLegend"
+      [colors]="pieChartColors">
     </canvas>
   </div>
 
@@ -67,7 +81,7 @@
       [labels]="lineChartLabels" 
       [chartType]="lineChartType" 
       [options]="lineChartOptions"
-      [legend]="lineChartLegend" >
+      [legend]="lineChartLegend">
     </canvas>
   </div>
   
@@ -129,3 +143,4 @@
     </div>
   </div>
 </section>
+</div>

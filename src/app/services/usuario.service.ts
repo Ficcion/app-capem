@@ -25,6 +25,9 @@ export class UsuarioService {
 
 
   autenticado() {
+    if ( this.token.length === 0) {
+      this.token = localStorage.getItem('token');
+    }
     return ( this.token.length > 6 ) ? true : false;
   }
 

@@ -18,10 +18,6 @@ export class AuthGuard implements CanActivate {
       //  console.log( 'Pasó por el Login Guard' );
        return true;
 
-    } else {
-       console.log( 'Bloqueado por el Login Guard' );
-       this.router.navigate(['/recursos']);
-       return false;
     }
   }
 

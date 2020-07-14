@@ -16,12 +16,15 @@ export class EstadisticasComponent implements OnInit {
 
   encuestas: EncuestaModel [] = [];
   miFecha: Date = new Date();
-  // cargando = true;
+  cargando = true;
   descarga = [];
 
   encuestasHoy = [];
   riesgo2Hoy = [];
   riesgo3Hoy = [];
+  porcentaje0Hoy = 0;
+  porcentaje2Hoy = 0;
+  porcentaje3Hoy = 0;
 
   encuestasJul = [];
   encuestasAgo = [];
@@ -52,12 +55,13 @@ export class EstadisticasComponent implements OnInit {
   riesgoT3dic = [];
 
 /* === Pie Chart inicio === */
-  pieChartData: number[] = [0, 0, 0];
-  pieChartLabels: Label[] = ['Encuestas', 'Riesgos T2', 'Riesgos T3'];
-  pieChartType: ChartType = 'pie';
-  pieChartOptions: ChartOptions = { responsive: true };
-  pieChartLegend = true;
+  public pieChartData: number[] = [0, 0, 0];
+  public pieChartLabels: Label[] = ['% Riesgos 0', '% Riesgos T2', '% Riesgos T3'];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartColors = [ { backgroundColor: ['grey', 'orange', 'firebrick'] } ];
 /* === Pie Chart fin === */
+
 
 /* === Line Chart inicio === */
   lineChartData: ChartDataSets[] = [
@@ -76,7 +80,9 @@ export class EstadisticasComponent implements OnInit {
     public usuarioService: UsuarioService,
     public encuestaService: EncuestaService,
     public csvService: CsvService
-  ) {}
+  ) {
+    this.cargando = true;
+  }
 
 
   ngOnInit(): void {
@@ -85,12 +91,10 @@ export class EstadisticasComponent implements OnInit {
 
 
   listado() {
-    // this.cargando = true;
 
     this.encuestaService.cargarEncuestas()
       .subscribe( (resp: any) => {
         this.encuestas = resp.encuestas;
-        // this.cargando = false;
 
         this.getEncuestasHoy();
         this.getRiesgo2Hoy();
@@ -99,8 +103,13 @@ export class EstadisticasComponent implements OnInit {
         this.getRiesgoT2();
         this.getRiesgoT3();
         this.getRiesgos();
+        this.porcentajes();
 
-        this.pieChartData = [this.encuestasHoy.length, this.riesgo2Hoy.length, this.riesgo3Hoy.length];
+        this.pieChartData = [
+          Number(this.porcentaje0Hoy.toFixed(2)),
+          Number(this.porcentaje2Hoy.toFixed(2)),
+          Number(this.porcentaje3Hoy.toFixed(2))
+        ];
 
         this.lineChartData = [
           // { data: [this.encuestasJul.length, this.encuestasAgo.length, this.encuestasSep.length, this.encuestasOct.length,
@@ -113,6 +122,7 @@ export class EstadisticasComponent implements OnInit {
             this.riesgoT3oct.length, this.riesgoT3nov.length, this.riesgoT3dic.length], label: 'Riesgos T3' }
         ];
       });
+    this.cargando = false;
   }
 
   getEncuestasHoy() {
@@ -240,6 +250,16 @@ export class EstadisticasComponent implements OnInit {
     this.riesgosOct = this.riesgoT2oct.length + this.riesgoT3oct.length;
     this.riesgosNov = this.riesgoT2nov.length + this.riesgoT3nov.length;
     this.riesgosDic = this.riesgoT2dic.length + this.riesgoT3dic.length;
+  }
+
+
+  porcentajes() {
+    const riesgos = this.riesgo2Hoy.length + this.riesgo3Hoy.length;
+    const noRiesgos = this.encuestasHoy.length - riesgos;
+
+    this.porcentaje0Hoy = noRiesgos * 100 / this.encuestasHoy.length;
+    this.porcentaje2Hoy = this.riesgo2Hoy.length * 100 / this.encuestasHoy.length;
+    this.porcentaje3Hoy = this.riesgo3Hoy.length * 100 / this.encuestasHoy.length;
   }
 
 

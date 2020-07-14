@@ -103,15 +103,14 @@ export class EncuestaComponent implements OnInit {
 
 
   comprueba1() {
-    if (this.forma.value.fiebre === true) {
-      if ( this.forma.value.tos === true
-        || this.forma.value.dlrCabeza === true
-        || this.forma.value.debilidadMal === true) {
+      if ( this.forma.value.fiebre === true && this.forma.value.tos === true ||
+        this.forma.value.fiebre === true && this.forma.value.dlrCabeza === true ||
+        this.forma.value.fiebre === true && this.forma.value.debilidadMal === true) {
 
           document.getElementById('seccion1').style.display = 'none';
           document.getElementById('seccion2').style.display = 'block';
       }
-    } else {
+     else {
 
       Swal.fire({
         title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',

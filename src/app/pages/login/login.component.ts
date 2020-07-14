@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioModel } from '../../models/usuario.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,14 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+
+    Swal.showLoading();
+
     const usuario = new UsuarioModel(
       null,
       forma.value.empresa,
@@ -42,8 +51,13 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.logIn( usuario, forma.value.recordarUsuario)
       .subscribe( logueado => {
+
         if (logueado) {
-          // console.log( logueado );
+          if (!this.usuarioService.usuario) {
+            this.usuarioService.usuario = JSON.parse(localStorage.getItem('usuario'));
+          }
+
+          Swal.close();
           this.router.navigate(['/estadisticas']);
 
         } else {
