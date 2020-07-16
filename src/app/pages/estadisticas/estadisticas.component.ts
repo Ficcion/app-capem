@@ -66,6 +66,7 @@ export class EstadisticasComponent implements OnInit {
 /* === Bar Chart inicio === */
 public barChartOptions: ChartOptions = {
   responsive: true,
+  // We use these empty structures as placeholders for dynamic theming.
   scales: { xAxes: [{}], yAxes: [{}] },
 };
 public barChartLabels: Label[] = ['Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
