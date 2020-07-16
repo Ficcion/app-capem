@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Label, Color } from 'ng2-charts';
 import { UsuarioService } from '../../services/usuario.service';
 import { EncuestaService } from '../../services/encuesta.service';
 import { CsvService } from '../../services/csv.service';
@@ -20,11 +20,12 @@ export class EstadisticasComponent implements OnInit {
   descarga = [];
 
   encuestasHoy = [];
+  sinRiesgoHoy = [];
   riesgo2Hoy = [];
   riesgo3Hoy = [];
-  porcentaje0Hoy = 0;
-  porcentaje2Hoy = 0;
-  porcentaje3Hoy = 0;
+  porcentNoSospechHoy = 0;
+  porcentSinRiesgo = 0;
+  porcentRiesgos = 0;
 
   encuestasJul = [];
   encuestasAgo = [];
@@ -56,25 +57,33 @@ export class EstadisticasComponent implements OnInit {
 
 /* === Pie Chart inicio === */
   public pieChartData: number[] = [0, 0, 0];
-  public pieChartLabels: Label[] = ['% Riesgos 0', '% Riesgos T2', '% Riesgos T3'];
+  public pieChartLabels: Label[] = [ 'No sospechoso', 'Sospechoso sin riesgo', 'Sospechoso de riesgo'];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
-  public pieChartColors = [ { backgroundColor: ['grey', 'orange', 'firebrick'] } ];
+  public pieChartColors = [ { backgroundColor: ['lightgray', 'orange', 'red'] } ];
 /* === Pie Chart fin === */
 
+/* === Bar Chart inicio === */
+public barChartOptions: ChartOptions = {
+  responsive: true,
+  // We use these empty structures as placeholders for dynamic theming.
+  scales: { xAxes: [{}], yAxes: [{}] },
+};
+public barChartLabels: Label[] = ['Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+public barChartType: ChartType = 'bar';
+public barChartLegend = true;
+public barChartColors: Color[] = [
+  { backgroundColor: 'red' },
+  { backgroundColor: '#EFA94A' },
+  { backgroundColor: '#DE6426' },
+];
 
-/* === Line Chart inicio === */
-  lineChartData: ChartDataSets[] = [
-    // { data: [0, 0, 0, 0, 0, 0], label: 'Encuestas' },
-    { data: [0, 0, 0, 0, 0, 0], label: 'Riesgos' },
-    { data: [0, 0, 0, 0, 0, 0], label: 'Riesgos T2' },
-    { data: [0, 0, 0, 0, 0, 0], label: 'Riesgos T3' }
-  ];
-  lineChartLabels: Label[] = ['Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  lineChartType: ChartType = 'line';
-  lineChartOptions: ChartOptions = { responsive: true, aspectRatio: 0 };
-  lineChartLegend = true;
-/* === Line Chart fin === */
+public barChartData: ChartDataSets[] = [
+  { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso de riesgo' },
+  { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso con posible complicación' },
+  { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso con factores de riesgo' }
+];
+/* === Bar Chart fin === */
 
   constructor(
     public usuarioService: UsuarioService,
@@ -91,12 +100,12 @@ export class EstadisticasComponent implements OnInit {
 
 
   listado() {
-
     this.encuestaService.cargarEncuestas()
       .subscribe( (resp: any) => {
         this.encuestas = resp.encuestas;
 
         this.getEncuestasHoy();
+        this.getSinRiesgoHoy();
         this.getRiesgo2Hoy();
         this.getRiesgo3Hoy();
         this.getEncuestas();
@@ -105,30 +114,42 @@ export class EstadisticasComponent implements OnInit {
         this.getRiesgos();
         this.porcentajes();
 
-        this.pieChartData = [
-          Number(this.porcentaje0Hoy.toFixed(2)),
-          Number(this.porcentaje2Hoy.toFixed(2)),
-          Number(this.porcentaje3Hoy.toFixed(2))
+        this.pieChartData = [ this.porcentNoSospechHoy, this.porcentSinRiesgo, this.porcentRiesgos ];
+
+        this.pieChartLabels = [
+          `No sospechoso ${this.porcentNoSospechHoy}%`,
+          `Sospechoso sin riesgo ${this.porcentSinRiesgo}%`,
+          `Sospechoso de riesgo ${this.porcentRiesgos}%`
         ];
 
-        this.lineChartData = [
-          // { data: [this.encuestasJul.length, this.encuestasAgo.length, this.encuestasSep.length, this.encuestasOct.length,
-          //   this.encuestasNov.length, this.encuestasDic.length], label: 'Encuestas' },
-          { data: [this.riesgosJul, this.riesgosAgo, this.riesgosSep, this.riesgosOct, this.riesgosNov, this.riesgosDic],
-            label: 'Riesgos' },
-          { data: [this.riesgoT2jul.length, this.riesgoT2ago.length, this.riesgoT2sep.length,
-            this.riesgoT2oct.length, this.riesgoT2nov.length, this.riesgoT2dic.length], label: 'Riesgos T2' },
-          { data: [ this.riesgoT3jul.length, this.riesgoT3ago.length, this.riesgoT3sep.length,
-            this.riesgoT3oct.length, this.riesgoT3nov.length, this.riesgoT3dic.length], label: 'Riesgos T3' }
+        this.barChartData = [
+          { data: [this.riesgosJul, this.riesgosAgo, this.riesgosSep, this.riesgosOct,
+            this.riesgosNov, this.riesgosDic], label: 'Sospechoso de riesgo' },
+          { data: [this.riesgoT2jul.length, this.riesgoT2ago.length, this.riesgoT2sep.length, this.riesgoT2oct.length,
+            this.riesgoT2nov.length, this.riesgoT2dic.length], label: 'Sospechoso con posible complicación' },
+          { data: [this.riesgoT3jul.length, this.riesgoT3ago.length, this.riesgoT3sep.length, this.riesgoT3oct.length,
+            this.riesgoT3nov.length, this.riesgoT3dic.length], label: 'Sospechoso con factores de riesgo' }
         ];
       });
     this.cargando = false;
   }
 
+
   getEncuestasHoy() {
     for (const encuesta of this.encuestas) {
       if ( encuesta.fecha === this.miFecha.toLocaleDateString() ) {
         this.encuestasHoy.push(encuesta);
+      }
+    }
+  }
+
+
+  getSinRiesgoHoy() {
+    for (const encuesta of this.encuestas) {
+      if ( encuesta.fecha === this.miFecha.toLocaleDateString() && encuesta.fiebre === 'true' ) {
+        if ( encuesta.secc2Riesgo === 'false' && encuesta.secc3Riesgo === 'false') {
+          this.sinRiesgoHoy.push(encuesta);
+        }
       }
     }
   }
@@ -255,11 +276,13 @@ export class EstadisticasComponent implements OnInit {
 
   porcentajes() {
     const riesgos = this.riesgo2Hoy.length + this.riesgo3Hoy.length;
-    const noRiesgos = this.encuestasHoy.length - riesgos;
+    this.porcentRiesgos = riesgos * 100 / this.encuestasHoy.length;
 
-    this.porcentaje0Hoy = noRiesgos * 100 / this.encuestasHoy.length;
-    this.porcentaje2Hoy = this.riesgo2Hoy.length * 100 / this.encuestasHoy.length;
-    this.porcentaje3Hoy = this.riesgo3Hoy.length * 100 / this.encuestasHoy.length;
+    const noSospechoso = this.encuestasHoy.length - riesgos - this.sinRiesgoHoy.length;
+    this.porcentNoSospechHoy = noSospechoso * 100 / this.encuestasHoy.length;
+
+    const sinRiesgo = this.encuestasHoy.length - riesgos - noSospechoso;
+    this.porcentSinRiesgo = sinRiesgo * 100 / this.encuestasHoy.length;
   }
 
 

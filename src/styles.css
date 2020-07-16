@@ -213,16 +213,6 @@ a:hover {
   font-size: 70%;
 }
 
-.impr {
-  max-width: 1250px !important;
-  max-height: 1250px !important;
-}
-
-.impr2 {
-  max-width: 990px !important;
-  max-height: 495px !important;
-}
-
 @media print {
   .doNotPrint {
       display: none !important;
@@ -232,8 +222,18 @@ a:hover {
     page-break-before: always;
  }
 
+  canvas {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    width: 960px !important;
+    height: 480px !important;
+  }
+
   @page{
     size: auto;
-    margin: 3mm;
+    margin: 10mm;
   }
 }
