@@ -117,9 +117,9 @@ public barChartData: ChartDataSets[] = [
         this.pieChartData = [ this.porcentNoSospechHoy, this.porcentSinRiesgo, this.porcentRiesgos ];
 
         this.pieChartLabels = [
-          `No sospechoso ${this.porcentNoSospechHoy}%`,
-          `Sospechoso sin riesgo ${this.porcentSinRiesgo}%`,
-          `Sospechoso de riesgo ${this.porcentRiesgos}%`
+          `No sospechoso ${this.porcentNoSospechHoy.toFixed(2)}%`,
+          `Sospechoso sin riesgo ${this.porcentSinRiesgo.toFixed(2)}%`,
+          `Sospechoso de riesgo ${this.porcentRiesgos.toFixed(2)}%`
         ];
 
         this.barChartData = [
