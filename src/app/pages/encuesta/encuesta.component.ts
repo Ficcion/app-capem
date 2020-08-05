@@ -19,10 +19,11 @@ export class EncuestaComponent implements OnInit {
   mail: {};
   empresaErr = false;
   dia: Date = new Date();
+  diaEs = `${this.dia.getDate()}/${this.dia.getMonth() + 1}/${this.dia.getFullYear()}`;
   empleado: '';
   btn3 = false;
-  secc2Riesgo = false;
-  secc3Riesgo = false;
+  sospechosoComplicacion = false;
+  sospechosoRiesgo = false;
 
   constructor(
     public encuestaService: EncuestaService,
@@ -32,33 +33,33 @@ export class EncuestaComponent implements OnInit {
   ngOnInit(): void {
     this.forma = new FormGroup({
       codigo: new FormControl( null, [Validators.required, Validators.minLength(2)] ),
-      numEmp: new FormControl( null, Validators.required ),
-      fecha: new FormControl( this.dia.toLocaleDateString(), Validators.required ),
+      numeroEmpleado: new FormControl( null, Validators.required ),
+      fecha: new FormControl( this.diaEs, Validators.required ),
       fiebre: new FormControl( null ),
       tos: new FormControl( null ),
       diarrea: new FormControl( null ),
       vomito: new FormControl( null ),
       calosfrios: new FormControl( null ),
-      dlrCabeza: new FormControl( null ),
-      dlrAbdominal: new FormControl( null ),
-      dlrMuscular: new FormControl( null ),
-      dlrArticulaciones: new FormControl( null ),
-      debilidadMal: new FormControl( null ),
-      secrNasal: new FormControl( null ),
-      dlrGarganta: new FormControl( null ),
+      dolorCabeza: new FormControl( null ),
+      dolorAbdominal: new FormControl( null ),
+      dolorMuscular: new FormControl( null ),
+      dolorArticulaciones: new FormControl( null ),
+      debilidadMalestar: new FormControl( null ),
+      secrecionNasal: new FormControl( null ),
+      dolorGarganta: new FormControl( null ),
       conjuntivitis: new FormControl( null ),
-      sintomas2: new FormControl( null ),
+      sintomasComplicacion: new FormControl( null ),
       diabetes: new FormControl( null ),
       presion: new FormControl( null ),
-      enfCorazon: new FormControl( null ),
-      enfRenal: new FormControl( null ),
-      enfPulmonares: new FormControl( null ),
+      enfermedadCorazon: new FormControl( null ),
+      enfermedadRenal: new FormControl( null ),
+      enfermedadPulmonar: new FormControl( null ),
       cancer: new FormControl( null ),
       inmunocompromiso: new FormControl( null ),
       vih: new FormControl( null ),
       ninguna: new FormControl( null ),
-      secc2Riesgo: new FormControl( this.secc2Riesgo),
-      secc3Riesgo: new FormControl( this.secc3Riesgo),
+      sospechosoComplicacion: new FormControl( this.sospechosoComplicacion),
+      sospechosoRiesgo: new FormControl( this.sospechosoRiesgo),
     });
 
     this.correo = new FormGroup({
@@ -98,14 +99,14 @@ export class EncuestaComponent implements OnInit {
 
 
   copiaEmpleado() {
-    this.empleado = this.forma.value.numEmp;
+    this.empleado = this.forma.value.numeroEmpleado;
   }
 
 
   comprueba1() {
       if ( this.forma.value.fiebre === true && this.forma.value.tos === true ||
-        this.forma.value.fiebre === true && this.forma.value.dlrCabeza === true ||
-        this.forma.value.fiebre === true && this.forma.value.debilidadMal === true) {
+        this.forma.value.fiebre === true && this.forma.value.dolorCabeza === true ||
+        this.forma.value.fiebre === true && this.forma.value.debilidadMalestar === true) {
 
           document.getElementById('seccion1').style.display = 'none';
           document.getElementById('seccion2').style.display = 'block';
@@ -211,14 +212,14 @@ export class EncuestaComponent implements OnInit {
 
 
   comprueba2() {
-    if (this.forma.value.sintomas2 === 'No') {
+    if (this.forma.value.sintomasComplicacion === 'No') {
 
       document.getElementById('seccion2').style.display = 'none';
       document.getElementById('seccion3').style.display = 'block';
 
     } else {
 
-      this.forma.value.secc2Riesgo = true;
+      this.forma.value.sospechosoComplicacion = true;
       this.enviarCorreo();
 
       Swal.fire({
@@ -249,9 +250,9 @@ export class EncuestaComponent implements OnInit {
       this.btn3 = true;
       this.forma.controls.diabetes.setValue(null);
       this.forma.controls.presion.setValue(null);
-      this.forma.controls.enfCorazon.setValue(null);
-      this.forma.controls.enfRenal.setValue(null);
-      this.forma.controls.enfPulmonares.setValue(null);
+      this.forma.controls.enfermedadCorazon.setValue(null);
+      this.forma.controls.enfermedadRenal.setValue(null);
+      this.forma.controls.enfermedadPulmonar.setValue(null);
       this.forma.controls.cancer.setValue(null);
       this.forma.controls.inmunocompromiso.setValue(null);
       this.forma.controls.vih.setValue(null);
@@ -263,9 +264,9 @@ export class EncuestaComponent implements OnInit {
     if (
       this.forma.value.diabetes === true
       || this.forma.value.presion === true
-      || this.forma.value.enfCorazon === true
-      || this.forma.value.enfRenal === true
-      || this.forma.value.enfPulmonares === true
+      || this.forma.value.enfermedadCorazon === true
+      || this.forma.value.enfermedadRenal === true
+      || this.forma.value.enfermedadPulmonar === true
       || this.forma.value.cancer === true
       || this.forma.value.inmunocompromiso === true
       || this.forma.value.vih === true
@@ -285,7 +286,7 @@ export class EncuestaComponent implements OnInit {
 
       } else {
 
-        this.forma.value.secc3Riesgo = true;
+        this.forma.value.sospechosoRiesgo = true;
         this.enviarCorreo();
 
         Swal.fire({
@@ -320,33 +321,33 @@ export class EncuestaComponent implements OnInit {
   enviarEncuesta() {
     const encuestaNueva = new EncuestaModel(
       this.forma.value.codigo,
-      this.forma.value.numEmp,
+      this.forma.value.numeroEmpleado,
       this.forma.value.fecha,
       this.forma.value.fiebre,
       this.forma.value.tos,
       this.forma.value.diarrea,
       this.forma.value.vomito,
       this.forma.value.calosfrios,
-      this.forma.value.dlrCabeza,
-      this.forma.value.dlrAbdominal,
-      this.forma.value.dlrMuscular,
-      this.forma.value.dlrArticulaciones,
-      this.forma.value.debilidadMal,
-      this.forma.value.secrNasal,
-      this.forma.value.dlrGarganta,
+      this.forma.value.dolorCabeza,
+      this.forma.value.dolorAbdominal,
+      this.forma.value.dolorMuscular,
+      this.forma.value.dolorArticulaciones,
+      this.forma.value.debilidadMalestar,
+      this.forma.value.secrecionNasal,
+      this.forma.value.dolorGarganta,
       this.forma.value.conjuntivitis,
-      this.forma.value.sintomas2,
+      this.forma.value.sintomasComplicacion,
       this.forma.value.diabetes,
       this.forma.value.presion,
-      this.forma.value.enfCorazon,
-      this.forma.value.enfRenal,
-      this.forma.value.enfPulmonares,
+      this.forma.value.enfermedadCorazon,
+      this.forma.value.enfermedadRenal,
+      this.forma.value.enfermedadPulmonar,
       this.forma.value.cancer,
       this.forma.value.inmunocompromiso,
       this.forma.value.vih,
       this.forma.value.ninguna,
-      this.forma.value.secc2Riesgo,
-      this.forma.value.secc3Riesgo,
+      this.forma.value.sospechosoComplicacion,
+      this.forma.value.sospechosoRiesgo,
     );
 
     this.encuestaService.crearEncuesta( encuestaNueva )

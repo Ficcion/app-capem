@@ -19,7 +19,7 @@
                             <p *ngIf="empresaErr" class="text-danger">Ingresa una empresa correcta</p>
                         </div>
                         <div class="input-group col-md-4 encuesta">
-                            <input (change)="copiaEmpleado()" type="text" class="form-control" formControlName="numEmp" placeholder="# Empleado (requerido)">
+                            <input (change)="copiaEmpleado()" type="text" class="form-control" formControlName="numeroEmpleado" placeholder="# Empleado (requerido)">
                         </div>
                         <div class="input-group col-md-4">
                             <input type="text" class="form-control" formControlName="fecha" readonly placeholder="Fecha">
@@ -52,33 +52,33 @@
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="dlrCabeza" id="Switch6">
+                                <input type="checkbox" class="custom-control-input" formControlName="dolorCabeza" id="Switch6">
                                 <label class="custom-control-label" for="Switch6">DOLOR DE CABEZA</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="dlrAbdominal" id="Switch7">
+                                <input type="checkbox" class="custom-control-input" formControlName="dolorAbdominal" id="Switch7">
                                 <label class="custom-control-label" for="Switch7">DOLOR ABDOMINAL</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="dlrMuscular" id="Switch8">
+                                <input type="checkbox" class="custom-control-input" formControlName="dolorMuscular" id="Switch8">
                                 <label class="custom-control-label" for="Switch8">DOLOR MUSCULAR</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="dlrArticulaciones" id="Switch9">
+                                <input type="checkbox" class="custom-control-input" formControlName="dolorArticulaciones" id="Switch9">
                                 <label class="custom-control-label" for="Switch9">DOLOR EN LAS ARTICULACIONES</label>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="debilidadMal" id="Switch10">
+                                <input type="checkbox" class="custom-control-input" formControlName="debilidadMalestar" id="Switch10">
                                 <label class="custom-control-label" for="Switch10">DEBILIDAD Y MALESTAR EN GENERAL</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="secrNasal" id="Switch11">
+                                <input type="checkbox" class="custom-control-input" formControlName="secrecionNasal" id="Switch11">
                                 <label class="custom-control-label" for="Switch11">SECRECIÓN NASAL</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" formControlName="dlrGarganta" id="Switch12">
+                                <input type="checkbox" class="custom-control-input" formControlName="dolorGarganta" id="Switch12">
                                 <label class="custom-control-label" for="Switch12">DOLOR DE GARGANTA AL PASAR ALIMENTOS</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
@@ -94,7 +94,7 @@
                 
                 <section id="seccion2">
                     <h4>¿Tienes alguno de estos síntomas?
-                        <p *ngIf="this.forma.value.sintomas2 === null" class="text-danger">(Debes elegir una opción para continuar)</p>
+                        <p *ngIf="this.forma.value.sintomasComplicacion === null" class="text-danger">(Debes elegir una opción para continuar)</p>
                     </h4>
                     <div class="row">
                         <div class="col-md-6">
@@ -115,16 +115,16 @@
                     </div>
                     <div class="form-group text-center">
                         <div class="form-check form-check-inline radio">
-                            <input (click)="llenarCorreo()" class="form-check-input" type="radio" formControlName="sintomas2" id="radio1" value="Sí">
+                            <input (click)="llenarCorreo()" class="form-check-input" type="radio" formControlName="sintomasComplicacion" id="radio1" value="Si">
                             <label class="form-check-label" for="Radio1">SI</label>
                         </div>
                         <div class="form-check form-check-inline radio">
-                            <input class="form-check-input" type="radio" formControlName="sintomas2" id="radio2" value="No">
+                            <input class="form-check-input" type="radio" formControlName="sintomasComplicacion" id="radio2" value="No">
                             <label class="form-check-label" for="Radio2">NO</label>
                         </div>
                     </div> 
                     <div class="form-group text-right">
-                        <button *ngIf="this.forma.value.sintomas2 !== null" class="btn-outline-primary btn-lg" type="button" (click)="comprueba2()">Siguiente</button>
+                        <button *ngIf="this.forma.value.sintomasComplicacion !== null" class="btn-outline-primary btn-lg" type="button" (click)="comprueba2()">Siguiente</button>
                     </div>                    
                 </section>
 
@@ -143,17 +143,17 @@
                                 <label class="custom-control-label" for="Switch15">PRESIÓN ALTA</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfCorazon" id="Switch16">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfermedadCorazon" id="Switch16">
                                 <label class="custom-control-label" for="Switch16">ENFERMEDADES DEL CORAZÓN</label>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
                             <div class="form-group custom-control custom-switch">
-                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfRenal" id="Switch17">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfermedadRenal" id="Switch17">
                                 <label class="custom-control-label" for="Switch17">ENFERMEDAD RENAL</label>
                             </div>
                             <div class="form-group custom-control custom-switch">
-                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfPulmonares" id="Switch18">
+                                <input (change)="valAlguna($event)" type="checkbox" class="custom-control-input" formControlName="enfermedadPulmonar" id="Switch18">
                                 <label class="custom-control-label" for="Switch18">ENFERMEDADES PULMONARES CRÓNICAS</label>
                             </div>
                         </div>

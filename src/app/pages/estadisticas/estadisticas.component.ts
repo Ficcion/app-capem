@@ -15,7 +15,8 @@ import { EncuestaModel } from '../../models/encuesta.model';
 export class EstadisticasComponent implements OnInit {
 
   encuestas: EncuestaModel [] = [];
-  miFecha: Date = new Date();
+  fecha: Date = new Date();
+  fechaEs = `${this.fecha.getDate()}/${this.fecha.getMonth() + 1}/${this.fecha.getFullYear()}`;
   cargando = true;
   descarga = [];
 
@@ -137,7 +138,7 @@ public barChartData: ChartDataSets[] = [
 
   getEncuestasHoy() {
     for (const encuesta of this.encuestas) {
-      if ( encuesta.fecha === this.miFecha.toLocaleDateString() ) {
+      if ( encuesta.fecha === this.fechaEs ) {
         this.encuestasHoy.push(encuesta);
       }
     }
@@ -146,9 +147,11 @@ public barChartData: ChartDataSets[] = [
 
   getSinRiesgoHoy() {
     for (const encuesta of this.encuestas) {
-      if ( encuesta.fecha === this.miFecha.toLocaleDateString() && encuesta.fiebre === 'true' ) {
-        if ( encuesta.secc2Riesgo === 'false' && encuesta.secc3Riesgo === 'false') {
-          this.sinRiesgoHoy.push(encuesta);
+      if ( encuesta.fecha === this.fechaEs ) {
+        if ( encuesta.sospechosoComplicacion === 'false' && encuesta.sospechosoRiesgo === 'false' ) {
+          if ( encuesta.fiebre === 'true' && encuesta.sintomasComplicacion === 'No' ) {
+            this.sinRiesgoHoy.push(encuesta);
+          }
         }
       }
     }
@@ -157,7 +160,7 @@ public barChartData: ChartDataSets[] = [
 
   getRiesgo2Hoy() {
     for (const encuesta of this.encuestas) {
-      if ( encuesta.fecha === this.miFecha.toLocaleDateString() && encuesta.secc2Riesgo === 'true' ) {
+      if ( encuesta.fecha === this.fechaEs && encuesta.sospechosoComplicacion === 'true' ) {
         this.riesgo2Hoy.push(encuesta);
       }
     }
@@ -166,7 +169,7 @@ public barChartData: ChartDataSets[] = [
 
   getRiesgo3Hoy() {
     for (const encuesta of this.encuestas) {
-      if ( encuesta.fecha === this.miFecha.toLocaleDateString() && encuesta.secc3Riesgo === 'true' ) {
+      if ( encuesta.fecha === this.fechaEs && encuesta.sospechosoRiesgo === 'true' ) {
         this.riesgo3Hoy.push(encuesta);
       }
     }
@@ -207,7 +210,7 @@ public barChartData: ChartDataSets[] = [
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
 
-      if ( encuesta.secc2Riesgo === 'true' ) {
+      if ( encuesta.sospechosoComplicacion === 'true' ) {
         switch (mes){
           case '7':
             this.riesgoT2jul.push(encuesta);
@@ -238,13 +241,14 @@ public barChartData: ChartDataSets[] = [
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
 
-      if ( encuesta.secc3Riesgo === 'true' ) {
+      if ( encuesta.sospechosoRiesgo === 'true' ) {
         switch (mes){
           case '7':
             this.riesgoT3jul.push(encuesta);
             break;
           case '8':
             this.riesgoT3ago.push(encuesta);
+            console.log( this.riesgoT3ago );
             break;
           case '9':
             this.riesgoT3sep.push(encuesta);
@@ -291,7 +295,7 @@ public barChartData: ChartDataSets[] = [
     for (const encuesta of this.encuestas) {
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
-      const miMes = this.miFecha.getMonth() + 1;
+      const miMes = this.fecha.getMonth() + 1;
       const dia = suFecha[suFecha.length - 3 ];
 
       if ( mes === miMes.toLocaleString() ) {
@@ -311,7 +315,7 @@ public barChartData: ChartDataSets[] = [
         }
       }
     }
-    this.csvService.exportAcsv(`Encuestas_${this.miFecha.toLocaleDateString()}.csv`, this.descarga);
+    this.csvService.exportAcsv(`Encuestas_${this.fechaEs}.csv`, this.descarga);
   }
 
 

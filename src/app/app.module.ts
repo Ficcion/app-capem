@@ -1,10 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { registerLocaleData } from '@angular/common';
-import localEs from '@angular/common/locales/es';
-
-registerLocaleData(localEs);
 
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
@@ -47,10 +43,6 @@ import { FooterComponent } from './pages/footer/footer.component';
     ChartsModule
   ],
   providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: 'es'
-    },
     UsuarioService,
     EncuestaService,
     CsvService

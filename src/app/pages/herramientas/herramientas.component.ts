@@ -72,7 +72,6 @@ export class HerramientasComponent implements OnInit {
 
 
   llenarUsuario( inputValor: string ) {
-    // this.cargando = true;
     this.crear = true;
     this.registrar = false;
     this.actualizar = true;
@@ -85,7 +84,6 @@ export class HerramientasComponent implements OnInit {
       this.usuario = resp;
       this.forma.patchValue(this.usuario);
 
-      // this.cargando = false;
     });
   }
 

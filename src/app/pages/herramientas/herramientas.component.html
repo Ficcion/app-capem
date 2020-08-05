@@ -5,7 +5,7 @@
 
     <input #buscado (change)="llenarUsuario( buscado.value )" class="card" type="text" required placeholder="editar usuario">
 
-    <a class="card">
+    <a class="card" (click)="limpiar()">
         <span class="h">Limpiar</span>
     </a>
 </div>
