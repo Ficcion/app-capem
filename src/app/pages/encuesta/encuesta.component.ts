@@ -75,8 +75,8 @@ export class EncuestaComponent implements OnInit {
 
   validaEmpresa() {
     const empresas = [
-      {cod: 'kinich', mail: 'alferreyraf@gmail.com'},
-      {cod: 'kinichp', mail: 'pruebaswapp19@gmail.com'},
+      {cod: 'Kinich', mail: 'alferreyraf@gmail.com'},
+      {cod: 'Kinichp', mail: 'pruebaswapp19@gmail.com'},
       {cod: 'capem', mail: 'salud_ocupacional@capem.com.mx'},
       {cod: 'capemp', mail: 'pruebaswapp19@gmail.com'},
       {cod: 'bd', mail: 'covid-19@byd.com'},
@@ -111,8 +111,8 @@ export class EncuestaComponent implements OnInit {
           document.getElementById('seccion1').style.display = 'none';
           document.getElementById('seccion2').style.display = 'block';
       }
-     else {
 
+      else {
       Swal.fire({
         title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
         html:
@@ -213,7 +213,6 @@ export class EncuestaComponent implements OnInit {
 
   comprueba2() {
     if (this.forma.value.sintomasComplicacion === 'No') {
-
       document.getElementById('seccion2').style.display = 'none';
       document.getElementById('seccion3').style.display = 'block';
 
@@ -236,7 +235,6 @@ export class EncuestaComponent implements OnInit {
 
   valAlguna(evento: any) {
     if (evento.currentTarget.checked === true) {
-
       this.btn3 = true;
       this.forma.controls.ninguna.setValue(null);
       this.llenarCorreo();
@@ -246,7 +244,6 @@ export class EncuestaComponent implements OnInit {
 
   valNinguna(evento: any) {
     if (evento.currentTarget.checked === true) {
-
       this.btn3 = true;
       this.forma.controls.diabetes.setValue(null);
       this.forma.controls.presion.setValue(null);
@@ -274,7 +271,6 @@ export class EncuestaComponent implements OnInit {
       ) {
 
       if (this.forma.value.ninguna === true) {
-
         Swal.fire({
           title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
           html:
@@ -285,7 +281,6 @@ export class EncuestaComponent implements OnInit {
         this.enviarEncuesta();
 
       } else {
-
         this.forma.value.sospechosoRiesgo = true;
         this.enviarCorreo();
 

@@ -248,7 +248,6 @@ public barChartData: ChartDataSets[] = [
             break;
           case '8':
             this.riesgoT3ago.push(encuesta);
-            console.log( this.riesgoT3ago );
             break;
           case '9':
             this.riesgoT3sep.push(encuesta);
@@ -291,14 +290,14 @@ public barChartData: ChartDataSets[] = [
 
 
   descargar() {
-    // IMPRIMIR POR SEMANA
+    // IMPRIME POR SEMANA, Descarga por mes
     for (const encuesta of this.encuestas) {
       const suFecha =  encuesta.fecha.split('/');
       const mes = suFecha[suFecha.length - 2 ];
       const miMes = this.fecha.getMonth() + 1;
       const dia = suFecha[suFecha.length - 3 ];
 
-      if ( mes === miMes.toLocaleString() ) {
+      if ( Number(mes) === miMes ) {
         if ( Number(dia) <= 7) {
           this.descarga.push(encuesta);
         }
@@ -310,6 +309,7 @@ public barChartData: ChartDataSets[] = [
         if ( Number(dia) > 15 && Number(dia) < 24) {
           this.descarga.push(encuesta);
         }
+
         if ( Number(dia) > 23 && Number(dia) <= 31) {
           this.descarga.push(encuesta);
         }
