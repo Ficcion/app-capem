@@ -201,6 +201,13 @@ public barChartData: ChartDataSets[] = [
           this.encuestasDic.push(encuesta);
           break;
       }
+      // Posible simplificación
+      // const anexaXmesE = mes === '7' ? this.encuestasJul.push(encuesta) :
+      //                   mes === '8' ? this.encuestasAgo.push(encuesta) :
+      //                   mes === '9' ? this.encuestasSep.push(encuesta) :
+      //                   mes === '10' ? this.encuestasOct.push(encuesta) :
+      //                   mes === '11' ? this.encuestasNov.push(encuesta) :
+      //                   mes === '12' ? this.encuestasDic.push(encuesta) : 'No está en la segunda mitad del año'
     }
   }
 
@@ -230,6 +237,13 @@ public barChartData: ChartDataSets[] = [
           case '12':
             this.riesgoT2dic.push(encuesta);
             break;
+          // Posible simplificación
+          // const anexaXmesRT2 = mes === '7' ? this.riesgoT2jul.push(encuesta) :
+          //                      mes === '8' ? this.riesgoT2ago.push(encuesta) :
+          //                      mes === '9' ? this.riesgoT2sep.push(encuesta) :
+          //                      mes === '10' ? this.riesgoT2oct.push(encuesta) :
+          //                      mes === '11' ? this.riesgoT2nov.push(encuesta) :
+          //                      mes === '12' ? this.riesgoT2dic.push(encuesta) : 'No está en la segunda mitad del año'
         }
       }
     }
@@ -261,6 +275,13 @@ public barChartData: ChartDataSets[] = [
           case '12':
             this.riesgoT3dic.push(encuesta);
             break;
+        // Posible simplificación
+        // const anexaXmesRT3 = mes === '7' ? this.riesgoT3jul.push(encuesta) :
+        //                      mes === '8' ? this.riesgoT3ago.push(encuesta) :
+        //                      mes === '9' ? this.riesgoT3sep.push(encuesta) :
+        //                      mes === '10' ? this.riesgoT3oct.push(encuesta) :
+        //                      mes === '11' ? this.riesgoT3nov.push(encuesta) :
+        //                      mes === '12' ? this.riesgoT3dic.push(encuesta) : 'No está en la segunda mitad del año'
         }
       }
     }
