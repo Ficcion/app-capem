@@ -104,9 +104,9 @@ export class EncuestaComponent implements OnInit {
 
 
   comprueba1() {
-      if ( this.forma.value.fiebre === true && this.forma.value.tos === true ||
-        this.forma.value.fiebre === true && this.forma.value.dolorCabeza === true ||
-        this.forma.value.fiebre === true && this.forma.value.debilidadMalestar === true) {
+      if ( this.forma.value.fiebre && this.forma.value.tos ||
+        this.forma.value.fiebre && this.forma.value.dolorCabeza ||
+        this.forma.value.fiebre && this.forma.value.debilidadMalestar ) {
 
           document.getElementById('seccion1').style.display = 'none';
           document.getElementById('seccion2').style.display = 'block';
@@ -234,7 +234,7 @@ export class EncuestaComponent implements OnInit {
 
 
   valAlguna(evento: any) {
-    if (evento.currentTarget.checked === true) {
+    if (evento.currentTarget.checked) {
       this.btn3 = true;
       this.forma.controls.ninguna.setValue(null);
       this.llenarCorreo();
@@ -243,7 +243,7 @@ export class EncuestaComponent implements OnInit {
 
 
   valNinguna(evento: any) {
-    if (evento.currentTarget.checked === true) {
+    if (evento.currentTarget.checked) {
       this.btn3 = true;
       this.forma.controls.diabetes.setValue(null);
       this.forma.controls.presion.setValue(null);
@@ -259,18 +259,18 @@ export class EncuestaComponent implements OnInit {
 
   comprueba3() {
     if (
-      this.forma.value.diabetes === true
-      || this.forma.value.presion === true
-      || this.forma.value.enfermedadCorazon === true
-      || this.forma.value.enfermedadRenal === true
-      || this.forma.value.enfermedadPulmonar === true
-      || this.forma.value.cancer === true
-      || this.forma.value.inmunocompromiso === true
-      || this.forma.value.vih === true
-      || this.forma.value.ninguna === true
+      this.forma.value.diabetes
+      || this.forma.value.presion
+      || this.forma.value.enfermedadCorazon
+      || this.forma.value.enfermedadRenal
+      || this.forma.value.enfermedadPulmonar
+      || this.forma.value.cancer
+      || this.forma.value.inmunocompromiso
+      || this.forma.value.vih
+      || this.forma.value.ninguna
       ) {
 
-      if (this.forma.value.ninguna === true) {
+      if (this.forma.value.ninguna) {
         Swal.fire({
           title: '<H4 style="color:#3594C5">¡Gracias por cuidar de todos! <H4/>',
           html:
@@ -347,7 +347,7 @@ export class EncuestaComponent implements OnInit {
 
     this.encuestaService.crearEncuesta( encuestaNueva )
       .subscribe( encuestaCreada => {
-      this.router.navigate([ '/recursos' ]);
+      this.router.navigate(['/recursos']);
       });
   }
 

@@ -80,7 +80,7 @@ public barChartColors: Color[] = [
 ];
 
 public barChartData: ChartDataSets[] = [
-  { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso de riesgo' },
+  { data: [0, 0, 0, 0, 0, 0], label: 'Total Sospechoso de riesgo' },
   { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso con posible complicación' },
   { data: [0, 0, 0, 0, 0, 0], label: 'Sospechoso con factores de riesgo' }
 ];
@@ -125,7 +125,7 @@ public barChartData: ChartDataSets[] = [
 
         this.barChartData = [
           { data: [this.riesgosJul, this.riesgosAgo, this.riesgosSep, this.riesgosOct,
-            this.riesgosNov, this.riesgosDic], label: 'Sospechoso de riesgo' },
+            this.riesgosNov, this.riesgosDic], label: 'Total Sospechoso de riesgo' },
           { data: [this.riesgoT2jul.length, this.riesgoT2ago.length, this.riesgoT2sep.length, this.riesgoT2oct.length,
             this.riesgoT2nov.length, this.riesgoT2dic.length], label: 'Sospechoso con posible complicación' },
           { data: [this.riesgoT3jul.length, this.riesgoT3ago.length, this.riesgoT3sep.length, this.riesgoT3oct.length,
@@ -201,13 +201,6 @@ public barChartData: ChartDataSets[] = [
           this.encuestasDic.push(encuesta);
           break;
       }
-      // Posible simplificación
-      // const anexaXmesE = mes === '7' ? this.encuestasJul.push(encuesta) :
-      //                   mes === '8' ? this.encuestasAgo.push(encuesta) :
-      //                   mes === '9' ? this.encuestasSep.push(encuesta) :
-      //                   mes === '10' ? this.encuestasOct.push(encuesta) :
-      //                   mes === '11' ? this.encuestasNov.push(encuesta) :
-      //                   mes === '12' ? this.encuestasDic.push(encuesta) : 'No está en la segunda mitad del año'
     }
   }
 
@@ -237,13 +230,6 @@ public barChartData: ChartDataSets[] = [
           case '12':
             this.riesgoT2dic.push(encuesta);
             break;
-          // Posible simplificación
-          // const anexaXmesRT2 = mes === '7' ? this.riesgoT2jul.push(encuesta) :
-          //                      mes === '8' ? this.riesgoT2ago.push(encuesta) :
-          //                      mes === '9' ? this.riesgoT2sep.push(encuesta) :
-          //                      mes === '10' ? this.riesgoT2oct.push(encuesta) :
-          //                      mes === '11' ? this.riesgoT2nov.push(encuesta) :
-          //                      mes === '12' ? this.riesgoT2dic.push(encuesta) : 'No está en la segunda mitad del año'
         }
       }
     }
@@ -275,13 +261,6 @@ public barChartData: ChartDataSets[] = [
           case '12':
             this.riesgoT3dic.push(encuesta);
             break;
-        // Posible simplificación
-        // const anexaXmesRT3 = mes === '7' ? this.riesgoT3jul.push(encuesta) :
-        //                      mes === '8' ? this.riesgoT3ago.push(encuesta) :
-        //                      mes === '9' ? this.riesgoT3sep.push(encuesta) :
-        //                      mes === '10' ? this.riesgoT3oct.push(encuesta) :
-        //                      mes === '11' ? this.riesgoT3nov.push(encuesta) :
-        //                      mes === '12' ? this.riesgoT3dic.push(encuesta) : 'No está en la segunda mitad del año'
         }
       }
     }
@@ -318,20 +297,20 @@ public barChartData: ChartDataSets[] = [
       const miMes = this.fecha.getMonth() + 1;
       const dia = suFecha[suFecha.length - 3 ];
 
-      if ( Number(mes) === miMes ) {
-        if ( Number(dia) <= 7) {
+      if ( Number.parseInt(mes) === miMes ) {
+        if ( Number.parseInt(dia) <= 7) {
           this.descarga.push(encuesta);
         }
 
-        if ( Number(dia) > 7 && Number(dia) < 16) {
+        if ( Number.parseInt(dia) > 7 && Number.parseInt(dia) < 16) {
           this.descarga.push(encuesta);
         }
 
-        if ( Number(dia) > 15 && Number(dia) < 24) {
+        if ( Number.parseInt(dia) > 15 && Number.parseInt(dia) < 24) {
           this.descarga.push(encuesta);
         }
 
-        if ( Number(dia) > 23 && Number(dia) <= 31) {
+        if ( Number.parseInt(dia) > 23 && Number.parseInt(dia) <= 31) {
           this.descarga.push(encuesta);
         }
       }
